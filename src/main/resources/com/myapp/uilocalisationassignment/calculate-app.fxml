@@ -9,13 +9,13 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.collections.FXCollections?>
 <?import java.lang.String?>
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
+<VBox fx:id="rootVBox" alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.myapp.uilocalisationassignment.AppController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
     </padding>
 
-    <ComboBox>
+    <ComboBox onAction="#handleLanguageChange">
         <items>
             <FXCollections fx:factory="observableArrayList">
                 <String fx:value="en"/>
@@ -25,16 +25,13 @@
             </FXCollections>
         </items>
         <value>en</value>
-        <onAction>#handleLanguageChange</onAction>
     </ComboBox>
-
-    <Label fx:id="welcomeText"/>
     <Label fx:id="tripDistanceText"/>
     <TextField fx:id="tripDistanceInput"/>
     <Label fx:id="fuelConsumptionRateText"/>
     <TextField fx:id="fuelConsumptionRateInput"/>
     <Label fx:id="fuelCostText"/>
     <TextField fx:id="fuelCostInput"/>
-    <Button text="%calculateButton" onAction="#handleCalculate"/>
+    <Button fx:id="btnCalculate" text="calculateButton" onAction="#handleCalculate"/>
     <Label fx:id="resultText"/>
 </VBox>
