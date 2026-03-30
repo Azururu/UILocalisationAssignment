@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
+import java.text.MessageFormat;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -37,7 +38,7 @@ public class AppController {
 
         double totalCost = totalFuel * Double.parseDouble(fuelCostInput.getText());
 
-        resultText.setText(String.format("Total fuel needed: %.2f liters\nTotal cost: %.2f", totalFuel, totalCost));
+        resultText.setText(MessageFormat.format(bundle.getString("resultText"), totalFuel, totalCost));
     }
 
     @FXML
