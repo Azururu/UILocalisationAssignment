@@ -21,4 +21,4 @@ RUN ls -l target
 
 COPY target/UILocalisationAssignment-1.0-SNAPSHOT.jar app.jar
 
-CMD ["java", "-Dfile.encoding=UTF-8", "--module-path", "/opt/javafx-sdk-21/lib", "--add-modules", "javafx.controls,javafx.fxml", "-jar", "target/sum-product_fx-1.0-SNAPSHOT.jar"]
+CMD ["java", "-Dfile.encoding=UTF-8", "--module-path", "/opt/javafx-sdk-21/lib", "--add-modules", "javafx.controls,javafx.fxml", "-jar", "target/UILocalisationAssignment-1.0-SNAPSHOT.jar"]
