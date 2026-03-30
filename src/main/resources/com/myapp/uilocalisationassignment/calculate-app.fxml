@@ -15,13 +15,13 @@
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
     </padding>
 
-    <ComboBox onAction="#handleLanguageChange">
+    <ComboBox fx:id="comboBox" onAction="#handleLanguageChange">
         <items>
             <FXCollections fx:factory="observableArrayList">
-                <String fx:value="en"/>
-                <String fx:value="fr"/>
-                <String fx:value="jp"/>
-                <String fx:value="ir"/>
+                <String fx:value="EN"/>
+                <String fx:value="FR"/>
+                <String fx:value="JP"/>
+                <String fx:value="IR"/>
             </FXCollections>
         </items>
         <value>en</value>

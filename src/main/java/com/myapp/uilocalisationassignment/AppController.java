@@ -3,6 +3,7 @@ package com.myapp.uilocalisationassignment;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
@@ -16,6 +17,7 @@ public class AppController {
     @FXML private TextField tripDistanceInput;
     @FXML private TextField fuelConsumptionRateInput;
     @FXML private TextField fuelCostInput;
+    @FXML private ComboBox<String> comboBox;
     @FXML private Label resultText;
     @FXML private VBox rootVBox;
     @FXML private Button btnCalculate;
@@ -25,6 +27,10 @@ public class AppController {
     @FXML
     public void initialize() {
         setLanguage(currentLocale);
+        tripDistanceText.setText("Trip Distance (km):");
+        fuelConsumptionRateText.setText("Fuel Consumption Rate (L/100km):");
+        fuelCostText.setText("Fuel Cost per Liter:");
+
     }
 
     @FXML
@@ -38,6 +44,13 @@ public class AppController {
 
     @FXML
     public void handleLanguageChange(ActionEvent actionEvent) {
+        String selected = comboBox.getValue();
+        switch (selected) {
+            case "EN" -> setLanguage(new Locale("en", "US"));
+            case "FR" -> setLanguage(new Locale("fr", "FR"));
+            case "JP" -> setLanguage(new Locale("ja", "JP"));
+            case "FA" -> setLanguage(new Locale("fa", "IR"));
+        }
     }
 
     private void setLanguage(Locale locale) {

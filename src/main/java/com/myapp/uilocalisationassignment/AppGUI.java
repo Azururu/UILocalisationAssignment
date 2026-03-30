@@ -16,7 +16,7 @@ public class AppGUI extends Application {
 
         VBox root = fxmlLoader.load();
 
-        Scene scene = new Scene(root, 400, 300);
+        Scene scene = new Scene(root, 400, 500);
 
         stage.setTitle("Fuel Cost Calculator");
         stage.setScene(scene);
