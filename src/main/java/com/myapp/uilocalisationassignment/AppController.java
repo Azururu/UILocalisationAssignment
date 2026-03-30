@@ -26,6 +26,8 @@ public class AppController {
 
     private ResourceBundle bundle;
     private Locale currentLocale = new Locale("en", "US");
+    private double totalFuel = 0;
+    private double totalCost = 0;
 
     @FXML
     public void initialize() {
@@ -34,10 +36,9 @@ public class AppController {
 
     @FXML
     public void handleCalculate(ActionEvent actionEvent) {
-        double totalFuel = ((Double.parseDouble(fuelConsumptionRateInput.getText()) / 100) * Double.parseDouble(tripDistanceInput.getText()));
+        totalFuel = ((Double.parseDouble(fuelConsumptionRateInput.getText()) / 100) * Double.parseDouble(tripDistanceInput.getText()));
 
-        double totalCost = totalFuel * Double.parseDouble(fuelCostInput.getText());
-
+        totalCost = totalFuel * Double.parseDouble(fuelCostInput.getText());
         resultText.setText(MessageFormat.format(bundle.getString("resultText"), totalFuel, totalCost));
     }
 
@@ -61,6 +62,7 @@ public class AppController {
         fuelConsumptionRateText.setText(bundle.getString("fuelConsumptionRateText"));
         fuelCostText.setText(bundle.getString("fuelCostText"));
         btnCalculate.setText(bundle.getString("btnCalculate"));
+        resultText.setText(MessageFormat.format(bundle.getString("resultText"), totalFuel, totalCost));
         // This method would contain logic to change the UI text based on the selected language.
         // For example, it could load a resource bundle and update the text of all labels and buttons.
     }
