@@ -39,11 +39,16 @@ pipeline {
 
     post {
         always {
-            junit '**/target/surefire-reports/TEST-*.xml'
-
-            recordCoverage(
-                tools: [[parser: 'JACOCO', pattern: '**/target/site/jacoco/jacoco.xml']]
-            )
+            script {
+                if (fileExists('target/surefire-reports')) {
+                    junit '**/target/surefire-reports/TEST-*.xml'
+                    recordCoverage(
+                        tools: [[parser: 'JACOCO', pattern: '**/target/site/jacoco/jacoco.xml']]
+                    )
+                } else {
+                    echo 'No tests found, skipping JUnit report'
+                }
+            }
         }
     }
 }
