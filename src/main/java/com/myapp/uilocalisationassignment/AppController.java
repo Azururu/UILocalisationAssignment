@@ -9,6 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class AppController {
     @FXML private Label tripDistanceText;
@@ -22,15 +23,12 @@ public class AppController {
     @FXML private VBox rootVBox;
     @FXML private Button btnCalculate;
 
+    private ResourceBundle bundle;
     private Locale currentLocale = new Locale("en", "US");
 
     @FXML
     public void initialize() {
         setLanguage(currentLocale);
-        tripDistanceText.setText("Trip Distance (km):");
-        fuelConsumptionRateText.setText("Fuel Consumption Rate (L/100km):");
-        fuelCostText.setText("Fuel Cost per Liter:");
-
     }
 
     @FXML
@@ -55,6 +53,13 @@ public class AppController {
 
     private void setLanguage(Locale locale) {
         currentLocale = locale;
+
+        bundle = ResourceBundle.getBundle("messages", currentLocale);
+
+        tripDistanceText.setText(bundle.getString("tripDistanceText"));
+        fuelConsumptionRateText.setText(bundle.getString("fuelConsumptionRateText"));
+        fuelCostText.setText(bundle.getString("fuelCostText"));
+        btnCalculate.setText(bundle.getString("btnCalculate"));
         // This method would contain logic to change the UI text based on the selected language.
         // For example, it could load a resource bundle and update the text of all labels and buttons.
     }

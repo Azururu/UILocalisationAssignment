@@ -21,10 +21,10 @@
                 <String fx:value="EN"/>
                 <String fx:value="FR"/>
                 <String fx:value="JP"/>
-                <String fx:value="IR"/>
+                <String fx:value="FA"/>
             </FXCollections>
         </items>
-        <value>en</value>
+        <value>EN</value>
     </ComboBox>
     <Label fx:id="tripDistanceText"/>
     <TextField fx:id="tripDistanceInput"/>
