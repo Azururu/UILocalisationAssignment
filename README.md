@@ -6,9 +6,9 @@ docker compose up --build
 
 ## Option 2: Run locally (without Docker)
 1. Install requirements
-Java 21
-Maven
-MariaDB
+- Java 21
+- Maven
+- MariaDB
 2. Create database
 
 Run the SQL from:
