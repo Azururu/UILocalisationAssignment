@@ -22,5 +22,6 @@ docker compose up --build
 db.url=jdbc:mariadb://localhost:3306/fuel_calculator_localization<br>
 db.user=root<br>
 db.password=your_password<br>
+
 4. Run the app
 - mvn clean javafx:run
