@@ -1,10 +1,10 @@
 ## Setup Instructions
-Option 1: Run with Docker (Recommended)
+# Option 1: Run with Docker (Recommended)
 1. Install & run Docker Desktop, Xming
 2. Start the application
 docker compose up --build
 
-Option 2: Run locally (without Docker)
+# Option 2: Run locally (without Docker)
 1. Install requirements
 Java 21
 Maven
