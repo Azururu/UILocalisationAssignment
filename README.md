@@ -11,17 +11,13 @@ docker compose up --build
 - MariaDB
 2. Create database
 
-- Run the SQL from:
-
-init.sql
+- Run the SQL from: init.sql
 
 3. Configure database
 
-Edit:
+- Edit: src/main/resources/db.properties
 
-src/main/resources/db.properties
-
-Example:
+- Example:
 
 db.url=jdbc:mariadb://localhost:3306/fuel_calculator_localization
 db.user=root
