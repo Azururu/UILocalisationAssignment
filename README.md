@@ -11,7 +11,7 @@ docker compose up --build
 - MariaDB
 2. Create database
 
-Run the SQL from:
+- Run the SQL from:
 
 init.sql
 
