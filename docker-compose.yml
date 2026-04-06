@@ -1,0 +1,32 @@
+version: "3.9"
+
+services:
+  db:
+    image: mariadb:11
+    container_name: fuel-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: kissa
+      MYSQL_DATABASE: fuel_calculator_localization
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  app:
+    build: .
+    container_name: fuel-app
+    depends_on:
+      - db
+    environment:
+      DB_URL: jdbc:mariadb://db:3306/fuel_calculator_localization
+      DB_USER: root
+      DB_PASSWORD: kissa
+    volumes:
+      - .:/app
+    stdin_open: true
+    tty: true
+
+volumes:
+  db_data:

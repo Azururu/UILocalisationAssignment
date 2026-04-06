@@ -10,7 +10,7 @@ import javafx.scene.layout.VBox;
 
 import java.text.MessageFormat;
 import java.util.Locale;
-import java.util.ResourceBundle;
+import java.util.Map;
 
 public class AppController {
     @FXML private Label tripDistanceText;
@@ -24,10 +24,12 @@ public class AppController {
     @FXML private VBox rootVBox;
     @FXML private Button btnCalculate;
 
-    private ResourceBundle bundle;
+    private LocalizationService localizationService = new LocalizationService();
+    private Map<String, String> bundle;
     private Locale currentLocale = new Locale("en", "US");
     private double totalFuel = 0;
     private double totalCost = 0;
+    private CalculationService calculationService = new CalculationService();
 
     @FXML
     public void initialize() {
@@ -36,34 +38,57 @@ public class AppController {
 
     @FXML
     public void handleCalculate(ActionEvent actionEvent) {
-        totalFuel = ((Double.parseDouble(fuelConsumptionRateInput.getText()) / 100) * Double.parseDouble(tripDistanceInput.getText()));
+        try {
+            double distance = Double.parseDouble(tripDistanceInput.getText());
+            double consumption = Double.parseDouble(fuelConsumptionRateInput.getText());
+            double price = Double.parseDouble(fuelCostInput.getText());
 
-        totalCost = totalFuel * Double.parseDouble(fuelCostInput.getText());
-        resultText.setText(MessageFormat.format(bundle.getString("resultText"), totalFuel, totalCost));
+            totalFuel = (consumption / 100) * distance;
+            totalCost = totalFuel * price;
+
+            resultText.setText(MessageFormat.format(bundle.getOrDefault("resultText", "Fuel: {0}, Cost: {1}"), totalFuel, totalCost));
+
+            calculationService.saveCalculation(
+                    distance,
+                    consumption,
+                    price,
+                    totalFuel,
+                    totalCost,
+                    currentLocale.getLanguage()
+            );
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
     public void handleLanguageChange(ActionEvent actionEvent) {
-        String selected = comboBox.getValue();
-        switch (selected) {
-            case "EN" -> setLanguage(new Locale("en", "US"));
-            case "FR" -> setLanguage(new Locale("fr", "FR"));
-            case "JP" -> setLanguage(new Locale("ja", "JP"));
-            case "FA" -> setLanguage(new Locale("fa", "IR"));
-        }
+        String lang = switch (comboBox.getValue()) {
+            case "FR" -> "fr";
+            case "JP" -> "ja";
+            case "FA" -> "fa";
+            default -> "en";
+        };
+
+        setLanguage(new Locale(lang));
     }
 
     private void setLanguage(Locale locale) {
         currentLocale = locale;
 
-        bundle = ResourceBundle.getBundle("messages", currentLocale);
+        String lang = locale.getLanguage();
+        bundle = localizationService.getLocalization(lang);
 
-        tripDistanceText.setText(bundle.getString("tripDistanceText"));
-        fuelConsumptionRateText.setText(bundle.getString("fuelConsumptionRateText"));
-        fuelCostText.setText(bundle.getString("fuelCostText"));
-        btnCalculate.setText(bundle.getString("btnCalculate"));
-        resultText.setText(MessageFormat.format(bundle.getString("resultText"), totalFuel, totalCost));
-        // This method would contain logic to change the UI text based on the selected language.
-        // For example, it could load a resource bundle and update the text of all labels and buttons.
+        if (bundle == null || bundle.isEmpty()) {
+            resultText.setText("⚠️ Failed to load language data");
+            return;
+        }
+
+        tripDistanceText.setText(bundle.getOrDefault("tripDistanceText", "Trip Distance"));
+        fuelConsumptionRateText.setText(bundle.getOrDefault("fuelConsumptionRateText", "Fuel Consumption"));
+        fuelCostText.setText(bundle.getOrDefault("fuelCostText", "Fuel Cost"));
+        btnCalculate.setText(bundle.getOrDefault("btnCalculate", "Calculate"));
+
+        resultText.setText(MessageFormat.format(bundle.getOrDefault("resultText", "Fuel: {0}, Cost: {1}"), totalFuel, totalCost));
     }
 }
