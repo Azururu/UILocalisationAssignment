@@ -43,8 +43,8 @@ public class AppController {
             double consumption = Double.parseDouble(fuelConsumptionRateInput.getText());
             double price = Double.parseDouble(fuelCostInput.getText());
 
-            totalFuel = (consumption / 100) * distance;
-            totalCost = totalFuel * price;
+            totalFuel = calculationService.calculateTotalFuel(distance, consumption);
+            totalCost = calculationService.calculateTotalCost(totalFuel, price);
 
             resultText.setText(MessageFormat.format(bundle.getOrDefault("resultText", "Fuel: {0}, Cost: {1}"), totalFuel, totalCost));
 
