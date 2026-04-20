@@ -3,6 +3,8 @@ pipeline {
 
     environment {
         DOCKER_IMAGE = "azuruu/ui-localisation-assignment"
+        DOCKERHUB_CREDENTIALS_ID = 'azuruu'
+        DOCKER_IMAGE_TAG = 'latest'
         SONARQUBE_SERVER = 'SonarQubeServer'
     }
 
@@ -36,18 +38,17 @@ pipeline {
         }
         stage('Build Docker Image') {
             steps {
-                bat 'docker build -t %DOCKER_IMAGE% .'
+                script {
+                    docker.build("${DOCKER_IMAGE}:${DOCKER_IMAGE_TAG}")
+                }
             }
         }
-        stage('Push to Docker Hub') {
+        stage('Push Docker Image to Docker Hub') {
             steps {
-                withCredentials([usernamePassword(
-                    credentialsId: 'dockerhub-creds',
-                    usernameVariable: 'DOCKER_USER',
-                    passwordVariable: 'DOCKER_PASS'
-                )]) {
-                    bat 'echo %DOCKER_PASS% | docker login -u %DOCKER_USER% --password-stdin'
-                    bat 'docker push %DOCKER_IMAGE%'
+                script {
+                    docker.withRegistry('https://index.docker.io/v1/', DOCKERHUB_CREDENTIALS_ID) {
+                        docker.image("${DOCKER_IMAGE}:${DOCKER_IMAGE_TAG}").push()
+                    }
                 }
             }
         }
