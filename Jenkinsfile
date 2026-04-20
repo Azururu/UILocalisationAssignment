@@ -10,7 +10,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'master',
+                git branch: 'SonarQube',
                 credentialsId: 'github-pat',
                 url: 'https://github.com/Azururu/UILocalisationAssignment.git'
             }
