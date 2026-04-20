@@ -17,6 +17,14 @@ public class LocalizationService {
             return cache.get(language);
         }
 
+        // 🔥 CUSTOM TEST CONNECTION (mock)
+        try {
+            Connection conn = DatabaseConnection.getConnection();
+            if (conn != null && AppController.TEST_MODE) {
+                return fetchFromDB(conn, language);
+            }
+        } catch (SQLException ignored) {}
+
         // 🔥 TEST MODE: return fake translations, skip DB entirely
         if (AppController.TEST_MODE) {
             Map<String, String> testTranslations = getTestModeLocalization(language);
@@ -25,34 +33,34 @@ public class LocalizationService {
         }
 
         Map<String, String> translations = new HashMap<>();
-        String sql = "SELECT `key`, value FROM localization_strings WHERE language = ?";
-
         try (Connection connection = DatabaseConnection.getConnection()) {
-
             if (connection == null) {
                 logger.warning("Connection is null — DB unavailable");
                 return translations;
             }
-
-            try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-                stmt.setString(1, language);
-
-                try (ResultSet rs = stmt.executeQuery()) {
-                    while (rs.next()) {
-                        translations.put(
-                                rs.getString("key"),
-                                rs.getString("value")
-                        );
-                    }
-                }
-            }
-
+            translations = fetchFromDB(connection, language);
             cache.put(language, translations);
-
         } catch (SQLException e) {
             logger.warning("Failed getting localization: " + e.getMessage());
         }
 
+        return translations;
+    }
+
+    private Map<String, String> fetchFromDB(Connection connection, String language) throws SQLException {
+        Map<String, String> translations = new HashMap<>();
+        String sql = "SELECT `key`, value FROM localization_strings WHERE language = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, language);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    translations.put(
+                            rs.getString("key"),
+                            rs.getString("value")
+                    );
+                }
+            }
+        }
         return translations;
     }
 

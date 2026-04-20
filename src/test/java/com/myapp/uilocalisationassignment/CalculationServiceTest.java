@@ -6,6 +6,14 @@ import org.junit.jupiter.api.DisplayName;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.mockito.Mockito;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.lang.reflect.Field;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.*;
+
 /**
  * Unit tests for CalculationService class
  * Tests fuel calculation logic
@@ -29,6 +37,47 @@ public class CalculationServiceTest {
                 // no-op in tests: avoid DB access
             }
         };
+    }
+
+    @Test
+    @DisplayName("Should test saveCalculation with mocked connection")
+    public void testSaveCalculationWithMock() throws Exception {
+        CalculationService service = new CalculationService();
+        AppController.TEST_MODE = true;
+
+        Connection mockConn = mock(Connection.class);
+        PreparedStatement mockStmt = mock(PreparedStatement.class);
+
+        when(mockConn.prepareStatement(anyString())).thenReturn(mockStmt);
+        when(mockStmt.executeUpdate()).thenReturn(1);
+
+        DatabaseConnection.setTestConnection(mockConn);
+        try {
+            service.saveCalculation(100, 6, 1.5, 6, 9, "en");
+            verify(mockStmt).executeUpdate();
+        } finally {
+            DatabaseConnection.setTestConnection(null);
+        }
+    }
+
+    @Test
+    @DisplayName("Should test saveCalculation SQLException")
+    public void testSaveCalculationSQLException() throws Exception {
+        CalculationService service = new CalculationService();
+        AppController.TEST_MODE = true;
+
+        Connection mockConn = mock(Connection.class);
+        when(mockConn.prepareStatement(anyString())).thenThrow(new SQLException("Mocked SQL Exception"));
+        
+        DatabaseConnection.setTestConnection(mockConn);
+        try {
+            // Should not throw, but hit catch block
+            assertDoesNotThrow(() -> 
+                service.saveCalculation(100, 6, 1.5, 6, 9, "en")
+            );
+        } finally {
+            DatabaseConnection.setTestConnection(null);
+        }
     }
 
     @Test

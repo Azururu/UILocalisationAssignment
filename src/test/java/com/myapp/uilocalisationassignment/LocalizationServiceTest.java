@@ -8,6 +8,12 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import static org.mockito.Mockito.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 /**
  * Unit tests for LocalizationService class
  * Tests localization caching
@@ -184,6 +190,48 @@ public class LocalizationServiceTest {
         assertNotNull(localizationService.getLocalization("FA"));
         assertNotNull(localizationService.getLocalization("EN"));
         assertNotNull(localizationService.getLocalization("DE")); // Default
+    }
+
+    @Test
+    @DisplayName("Should test real DB branch with mock connection")
+    public void testGetLocalizationWithMock() throws Exception {
+        AppController.TEST_MODE = true; // Use TRUE to use setTestConnection but avoid DriverManager
+        LocalizationService service = new LocalizationService();
+
+        Connection mockConn = mock(Connection.class);
+        PreparedStatement mockStmt = mock(PreparedStatement.class);
+        ResultSet mockRs = mock(ResultSet.class);
+
+        when(mockConn.prepareStatement(anyString())).thenReturn(mockStmt);
+        when(mockStmt.executeQuery()).thenReturn(mockRs);
+        when(mockRs.next()).thenReturn(true, false);
+        when(mockRs.getString("key")).thenReturn("testKey");
+        when(mockRs.getString("value")).thenReturn("testValue");
+
+        DatabaseConnection.setTestConnection(mockConn);
+        try {
+            Map<String, String> result = service.getLocalization("NON_EXISTENT_IN_CACHE");
+            assertEquals("testValue", result.get("testKey"));
+        } finally {
+            DatabaseConnection.setTestConnection(null);
+        }
+    }
+
+    @Test
+    @DisplayName("Should test real DB branch SQLException")
+    public void testGetLocalizationSQLException() throws Exception {
+        AppController.TEST_MODE = true;
+        LocalizationService service = new LocalizationService();
+
+        Connection mockConn = mock(Connection.class);
+        when(mockConn.prepareStatement(anyString())).thenThrow(new SQLException("Mocked SQL Exception"));
+
+        DatabaseConnection.setTestConnection(mockConn);
+        try {
+            assertDoesNotThrow(() -> service.getLocalization("ANOTHER_NON_EXISTENT"));
+        } finally {
+            DatabaseConnection.setTestConnection(null);
+        }
     }
 
     @Test

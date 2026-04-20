@@ -32,7 +32,17 @@ public class DatabaseConnection {
         }
     }
 
+    private static Connection testConnection;
+    public static void setTestConnection(Connection conn) {
+        testConnection = conn;
+    }
+
     public static Connection getConnection() throws SQLException {
+
+        // Provide custom mock connection for testing
+        if (AppController.TEST_MODE && testConnection != null) {
+            return testConnection;
+        }
 
         // Prevent DB access during tests
         if (AppController.TEST_MODE) {
