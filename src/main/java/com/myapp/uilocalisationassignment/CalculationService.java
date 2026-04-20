@@ -2,11 +2,13 @@ package com.myapp.uilocalisationassignment;
 
 import java.sql.Connection;
 
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.logging.Logger;
 
 public class CalculationService {
+
+    private static final Logger logger = Logger.getLogger(CalculationService.class.getName());
 
     public void saveCalculation(double distance, double consumption, double price, double totalFuel, double totalCost, String language) {
         String sql = "INSERT INTO calculation_records (distance, consumption, price, total_fuel, total_cost, language) VALUES (?, ?, ?, ?, ?, ?)";
@@ -26,8 +28,7 @@ public class CalculationService {
                 System.out.println("Records inserted successfully");
             }
         } catch (SQLException e) {
-            System.out.println("Failed to save calculation");
-            e.printStackTrace();
+            logger.warning("Failed to save calculation: " + e.getMessage());
         }
     }
 

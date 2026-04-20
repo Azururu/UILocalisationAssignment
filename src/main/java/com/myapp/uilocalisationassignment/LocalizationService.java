@@ -3,10 +3,13 @@ package com.myapp.uilocalisationassignment;
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 public class LocalizationService {
 
     private final Map<String, Map<String, String>> cache = new HashMap<>();
+
+    private static final Logger logger = Logger.getLogger(LocalizationService.class.getName());
 
 
     public Map<String, String> getLocalization(String language) {
@@ -33,7 +36,7 @@ public class LocalizationService {
             }
             cache.put(language, translations);
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.warning("Failed getting localization:" + e.getMessage());
         }
         return translations;
     }

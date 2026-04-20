@@ -11,6 +11,7 @@ import javafx.scene.layout.VBox;
 import java.text.MessageFormat;
 import java.util.Locale;
 import java.util.Map;
+import java.util.logging.Logger;
 
 public class AppController {
     @FXML private Label tripDistanceText;
@@ -30,6 +31,7 @@ public class AppController {
     private double totalFuel = 0;
     private double totalCost = 0;
     private CalculationService calculationService = new CalculationService();
+    private static final Logger logger = Logger.getLogger(AppController.class.getName());
 
     @FXML
     public void initialize() {
@@ -57,7 +59,7 @@ public class AppController {
                     currentLocale.getLanguage()
             );
         } catch (NumberFormatException e) {
-            e.printStackTrace();
+            logger.warning("Invalid numeric input: " + e.getMessage());
         }
     }
 
