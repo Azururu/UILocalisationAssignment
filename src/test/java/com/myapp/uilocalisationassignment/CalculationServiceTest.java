@@ -114,3 +114,4 @@ public class CalculationServiceTest {
     @DisplayName("Should work correctly in full workflow")
     public void testFullCalculationWorkflow() {
         double totalFuel = calculationService.calculateTotalFuel(300, 7);
+    }
