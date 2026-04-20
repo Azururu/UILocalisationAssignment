@@ -1,0 +1,51 @@
+Plugins:
+Bundled analyzers:
+  - Clean as You Code 2.6.0.3665 (cayc)
+  - IaC Code Quality and Security 2.6.1.19203 (iac)
+  - Text Code Quality and Security 2.41.0.10709 (text)
+Global server settings:
+  - sonar.azureresourcemanager.file.suffixes=.bicep
+  - sonar.core.id=147B411E-AZ1ovpimtGa4kdGHHVqY
+  - sonar.core.startTime=2026-04-20T17:30:36+0300
+  - sonar.cs.file.suffixes=.cs,.razor
+  - sonar.css.file.suffixes=.css,.less,.scss,.sass
+  - sonar.docker.file.patterns=*.dockerfile,Dockerfile,dockerfile
+  - sonar.flex.file.suffixes=as
+  - sonar.forceAuthentication=true
+  - sonar.go.file.suffixes=.go
+  - sonar.html.file.suffixes=.html,.xhtml,.cshtml,.vbhtml,.aspx,.ascx,.rhtml,.erb,.shtm,.shtml,.cmp,.twig,.htm
+  - sonar.ipynb.file.suffixes=ipynb
+  - sonar.java.file.suffixes=.java,.jav
+  - sonar.java.jvmframeworkconfig.file.patterns=**/src/main/resources/**/*app*.properties,**/src/main/resources/**/*app*.yaml,**/src/main/resources/**/*app*.yml
+  - sonar.javascript.file.suffixes=.js,.jsx,.cjs,.mjs,.vue
+  - sonar.json.file.suffixes=.json
+  - sonar.jsp.file.suffixes=.jsp,.jspf,.jspx
+  - sonar.kotlin.file.suffixes=.kt,.kts
+  - sonar.multi-quality-mode.enabled=true
+  - sonar.php.file.suffixes=php,php3,php4,php5,phtml,inc
+  - sonar.python.file.suffixes=py
+  - sonar.qualityProfiles.allowDisableInheritedRules=true
+  - sonar.ruby.file.suffixes=.rb
+  - sonar.rust.file.suffixes=.rs
+  - sonar.scala.file.suffixes=.scala
+  - sonar.terraform.file.suffixes=.tf
+  - sonar.typescript.file.suffixes=.ts,.tsx,.cts,.mts
+  - sonar.vbnet.file.suffixes=.vb
+  - sonar.xml.file.suffixes=.xml,.xsd,.xsl,.config
+  - sonar.yaml.file.suffixes=.yaml,.yml
+Project server settings:
+Project scanner properties:
+  - sonar.host.url=http://localhost:9000
+  - sonar.java.binaries=C:/Users/saloa/IdeaProjects/UILocalisationAssignment/target/classes
+  - sonar.java.libraries=C:\Users\saloa\.m2\repository\org\openjfx\javafx-controls\21.0.6\javafx-controls-21.0.6.jar,C:\Users\saloa\.m2\repository\org\openjfx\javafx-controls\21.0.6\javafx-controls-21.0.6-win.jar,C:\Users\saloa\.m2\repository\org\openjfx\javafx-graphics\21.0.6\javafx-graphics-21.0.6.jar,C:\Users\saloa\.m2\repository\org\openjfx\javafx-graphics\21.0.6\javafx-graphics-21.0.6-win.jar,C:\Users\saloa\.m2\repository\org\openjfx\javafx-base\21.0.6\javafx-base-21.0.6.jar,C:\Users\saloa\.m2\repository\org\openjfx\javafx-base\21.0.6\javafx-base-21.0.6-win.jar,C:\Users\saloa\.m2\repository\org\openjfx\javafx-fxml\21.0.6\javafx-fxml-21.0.6.jar,C:\Users\saloa\.m2\repository\org\openjfx\javafx-fxml\21.0.6\javafx-fxml-21.0.6-win.jar,C:\Users\saloa\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.12.1\junit-jupiter-api-5.12.1.jar,C:\Users\saloa\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar,C:\Users\saloa\.m2\repository\org\junit\platform\junit-platform-commons\1.12.1\junit-platfor...
+  - sonar.java.source=8
+  - sonar.login=******
+  - sonar.projectBaseDir=C:\Users\saloa\IdeaProjects\UILocalisationAssignment
+  - sonar.projectKey=SonarAnalyzer:UILocalisationAssignment
+  - sonar.scanner.app=Intellij Sonar plugin
+  - sonar.scanner.appVersion=0.2.2
+  - sonar.scanner.home=C:\sonarscanner\sonar-scanner-8.0.1.6346-windows-x64
+  - sonar.sourceEncoding=UTF-8
+  - sonar.sources=C:/Users/saloa/IdeaProjects/UILocalisationAssignment/src/main/java,C:/Users/saloa/IdeaProjects/UILocalisationAssignment/src/main/resources,C:/Users/saloa/IdeaProjects/UILocalisationAssignment/target/generated-sources/annotations
+  - sonar.tests=
+  - sonar.working.directory=C:\Users\saloa\IdeaProjects\UILocalisationAssignment\.idea\SonarAnalyzer\.scannerwork

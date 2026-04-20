@@ -1,0 +1,6 @@
+projectKey=SonarAnalyzer:UILocalisationAssignment
+serverUrl=http://localhost:9000
+serverVersion=26.3.0.120487
+dashboardUrl=http://localhost:9000/dashboard?id=SonarAnalyzer%3AUILocalisationAssignment
+ceTaskId=14d2c500-39a7-4556-b73f-19092402ee7c
+ceTaskUrl=http://localhost:9000/api/ce/task?id=14d2c500-39a7-4556-b73f-19092402ee7c
