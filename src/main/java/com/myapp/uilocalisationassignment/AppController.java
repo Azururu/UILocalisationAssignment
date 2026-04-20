@@ -86,17 +86,7 @@ public class AppController {
     private void setLanguage(Locale locale) {
         currentLocale = locale;
 
-        if (TEST_MODE) {
-            bundle = Map.of(
-                    "tripDistanceText", "Trip Distance",
-                    "fuelConsumptionRateText", "Fuel Consumption",
-                    "fuelCostText", "Fuel Cost",
-                    "btnCalculate", "Calculate",
-                    "resultText", "Fuel: {0}, Cost: {1}"
-            );
-        } else {
-            bundle = localizationService.getLocalization(locale.getLanguage());
-        }
+        bundle = localizationService.getLocalization(locale.getLanguage());
 
         if (bundle == null || bundle.isEmpty()) {
             resultText.setText("⚠️ Failed to load language data");

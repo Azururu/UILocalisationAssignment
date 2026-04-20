@@ -12,14 +12,16 @@ public class LocalizationService {
 
     public Map<String, String> getLocalization(String language) {
 
-        // 🔥 TEST MODE: return fake translations, skip DB entirely
-        if (AppController.TEST_MODE) {
-            return getTestModeLocalization(language);
-        }
-
         // 🔥 Cache hit
         if (cache.containsKey(language)) {
             return cache.get(language);
+        }
+
+        // 🔥 TEST MODE: return fake translations, skip DB entirely
+        if (AppController.TEST_MODE) {
+            Map<String, String> testTranslations = getTestModeLocalization(language);
+            cache.put(language, testTranslations);
+            return testTranslations;
         }
 
         Map<String, String> translations = new HashMap<>();
