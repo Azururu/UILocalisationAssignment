@@ -25,7 +25,7 @@ public class CalculationService {
             int rows = stmt.executeUpdate();
 
             if (rows > 0) {
-                System.out.println("Records inserted successfully");
+                logger.info("Calculation saved successfully");
             }
         } catch (SQLException e) {
             logger.warning("Failed to save calculation: " + e.getMessage());

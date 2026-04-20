@@ -8,9 +8,11 @@ import java.util.Properties;
 import java.util.logging.Logger;
 
 public class DatabaseConnection {
-    private static String URL;
-    private static String USER;
-    private static String PASSWORD;
+    private static String url;
+    private static String user;
+    private static String password;
+
+    private DatabaseConnection() {}
 
     private static final Logger logger = Logger.getLogger(DatabaseConnection.class.getName());
 
@@ -22,9 +24,9 @@ public class DatabaseConnection {
             Properties props = new Properties();
             props.load(input);
 
-            URL = props.getProperty("db.url");
-            USER = props.getProperty("db.user");
-            PASSWORD = props.getProperty("db.password");
+            url = props.getProperty("db.url");
+            user = props.getProperty("db.user");
+            password = props.getProperty("db.password");
         } catch (Exception e) {
             logger.warning("Error:" + e.getMessage());
         }
@@ -32,10 +34,9 @@ public class DatabaseConnection {
 
     public static Connection getConnection() throws SQLException {
         try {
-            return DriverManager.getConnection(URL, USER, PASSWORD);
+            return DriverManager.getConnection(url, user, password);
         } catch (SQLException e) {
-            logger.warning("Error:" + e.getMessage());
-            throw e;
+            throw new SQLException("Failed to connect to DB using URL: " + url, e);
         }
     }
 }
