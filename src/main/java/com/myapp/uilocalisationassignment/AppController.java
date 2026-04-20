@@ -32,6 +32,7 @@ public class AppController {
     private double totalCost = 0;
     private CalculationService calculationService = new CalculationService();
     private static final Logger logger = Logger.getLogger(AppController.class.getName());
+    public static boolean TEST_MODE = false;
 
     @FXML
     public void initialize() {
@@ -78,8 +79,17 @@ public class AppController {
     private void setLanguage(Locale locale) {
         currentLocale = locale;
 
-        String lang = locale.getLanguage();
-        bundle = localizationService.getLocalization(lang);
+        if (TEST_MODE) {
+            bundle = Map.of(
+                    "tripDistanceText", "Trip Distance",
+                    "fuelConsumptionRateText", "Fuel Consumption",
+                    "fuelCostText", "Fuel Cost",
+                    "btnCalculate", "Calculate",
+                    "resultText", "Fuel: {0}, Cost: {1}"
+            );
+        } else {
+            bundle = localizationService.getLocalization(locale.getLanguage());
+        }
 
         if (bundle == null || bundle.isEmpty()) {
             resultText.setText("⚠️ Failed to load language data");
@@ -91,6 +101,10 @@ public class AppController {
         fuelCostText.setText(bundle.getOrDefault("fuelCostText", "Fuel Cost"));
         btnCalculate.setText(bundle.getOrDefault("btnCalculate", "Calculate"));
 
-        resultText.setText(MessageFormat.format(bundle.getOrDefault("resultText", "Fuel: {0}, Cost: {1}"), totalFuel, totalCost));
+        resultText.setText(MessageFormat.format(
+                bundle.getOrDefault("resultText", "Fuel: {0}, Cost: {1}"),
+                totalFuel,
+                totalCost
+        ));
     }
 }

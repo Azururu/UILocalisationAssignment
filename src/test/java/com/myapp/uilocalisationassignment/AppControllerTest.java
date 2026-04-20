@@ -8,6 +8,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
 
@@ -18,6 +19,11 @@ import static org.junit.jupiter.api.Assertions.*;
 public class AppControllerTest extends ApplicationTest {
 
     private AppController controller;
+
+    @BeforeAll
+    static void setup() {
+        AppController.TEST_MODE = true;
+    }
 
     @Override
     public void start(Stage stage) throws Exception {
