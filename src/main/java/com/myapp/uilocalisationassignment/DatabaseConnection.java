@@ -34,7 +34,7 @@ public class DatabaseConnection {
         try {
             return DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (SQLException e) {
-            System.err.println(e.getMessage());
+            logger.warning("Error:" + e.getMessage());
             throw e;
         }
     }
