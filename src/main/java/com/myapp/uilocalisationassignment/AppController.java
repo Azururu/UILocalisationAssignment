@@ -49,20 +49,27 @@ public class AppController {
             totalFuel = calculationService.calculateTotalFuel(distance, consumption);
             totalCost = calculationService.calculateTotalCost(totalFuel, price);
 
-            resultText.setText(MessageFormat.format(bundle.getOrDefault("resultText", "Fuel: {0}, Cost: {1}"), totalFuel, totalCost));
+            resultText.setText(MessageFormat.format(
+                    bundle.getOrDefault("resultText", "Fuel: {0}, Cost: {1}"),
+                    totalFuel, totalCost
+            ));
 
-            calculationService.saveCalculation(
-                    distance,
-                    consumption,
-                    price,
-                    totalFuel,
-                    totalCost,
-                    currentLocale.getLanguage()
-            );
+            if (!TEST_MODE) {
+                calculationService.saveCalculation(
+                        distance,
+                        consumption,
+                        price,
+                        totalFuel,
+                        totalCost,
+                        currentLocale.getLanguage()
+                );
+            }
+
         } catch (NumberFormatException e) {
             logger.warning("Invalid numeric input: " + e.getMessage());
         }
     }
+
 
     @FXML
     public void handleLanguageChange(ActionEvent actionEvent) {
