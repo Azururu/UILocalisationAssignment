@@ -29,7 +29,8 @@ pipeline {
                     bat """
                         "${tool 'SonarScanner'}\\bin\\sonar-scanner" ^
                         -Dsonar.projectKey=UILocalisationAssignment ^
-                        -Dsonar.sources=src ^
+                        -Dsonar.sources=src/main/java ^
+                        -Dsonar.tests=src/test/java ^
                         -Dsonar.projectName=UILocalisationAssignment ^
                         -Dsonar.host.url=http://localhost:9000 ^
                         -Dsonar.login=${env.SONAR_TOKEN} ^
