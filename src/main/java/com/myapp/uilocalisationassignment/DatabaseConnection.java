@@ -18,17 +18,18 @@ public class DatabaseConnection {
 
     static {
         try (InputStream input = DatabaseConnection.class.getClassLoader().getResourceAsStream("db.properties")) {
-            if (input == null) {
-                throw new IllegalStateException("db.properties not found on classpath");
-            }
             Properties props = new Properties();
-            props.load(input);
+            if (input != null) {
+                props.load(input);
+            }
 
-            url = props.getProperty("db.url");
-            user = props.getProperty("db.user");
-            password = props.getProperty("db.password");
+            // Prioritize Environment Variables, fallback to db.properties
+            url = System.getenv("DB_URL") != null ? System.getenv("DB_URL") : props.getProperty("db.url");
+            user = System.getenv("DB_USER") != null ? System.getenv("DB_USER") : props.getProperty("db.user");
+            password = System.getenv("DB_PASSWORD") != null ? System.getenv("DB_PASSWORD") : props.getProperty("db.password");
+
         } catch (Exception e) {
-            logger.warning("Error:" + e.getMessage());
+            logger.warning("Error loading database configuration: " + e.getMessage());
         }
     }
 
