@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         DOCKER_IMAGE = "azuruu/ui-localisation-assignment"
-        DOCKERHUB_CREDENTIALS_ID = 'azuruu'
+        DOCKERHUB_CREDENTIALS_ID = 'dockerhub-creds'
         DOCKER_IMAGE_TAG = 'latest'
         SONARQUBE_SERVER = 'SonarQubeServer'
     }
