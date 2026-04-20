@@ -115,3 +115,4 @@ public class CalculationServiceTest {
     public void testFullCalculationWorkflow() {
         double totalFuel = calculationService.calculateTotalFuel(300, 7);
     }
+}
