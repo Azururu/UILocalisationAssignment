@@ -23,7 +23,6 @@ public class DatabaseConnection {
                 props.load(input);
             }
 
-            // Prioritize Environment Variables, fallback to db.properties
             url = System.getenv("DB_URL") != null ? System.getenv("DB_URL") : props.getProperty("db.url");
             user = System.getenv("DB_USER") != null ? System.getenv("DB_USER") : props.getProperty("db.user");
             password = System.getenv("DB_PASSWORD") != null ? System.getenv("DB_PASSWORD") : props.getProperty("db.password");
@@ -34,6 +33,13 @@ public class DatabaseConnection {
     }
 
     public static Connection getConnection() throws SQLException {
+
+        // Prevent DB access during tests
+        if (AppController.TEST_MODE) {
+            logger.info("TEST_MODE enabled — skipping real DB connection.");
+            return null;
+        }
+
         try {
             return DriverManager.getConnection(url, user, password);
         } catch (SQLException e) {
