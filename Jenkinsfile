@@ -3,6 +3,8 @@ pipeline {
 
     environment {
         DOCKER_IMAGE = "azuruu/ui-localisation-assignment"
+        SONARQUBE_SERVER = 'SonarQubeServer'
+        SONAR_TOKEN = ${SONAR_TOKEN}
     }
 
     stages {
@@ -13,11 +15,26 @@ pipeline {
                 url: 'https://github.com/Azururu/UILocalisationAssignment.git'
             }
         }
-        stage('Build & Test') {
+        stage('Build') {
                     steps {
-                        bat 'mvn clean verify'
+                        bat 'mvn clean install'
                     }
                 }
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('SonarQubeServer') {
+                    bat """
+                        ${tool 'SonarScanner'}\\bin\\sonar-scanner^
+                        -Dsonar.projectKey=UILocalisationAssignment^
+                        -Dsonar.sources=src^
+                        -Dsonar.projectName=UILocalisationAssignment^
+                        -Dsonar.host.url=http://localhost:9000^
+                        -Dsonar.login=${env.SONAR_TOKEN}^
+                        -Dsonar.java.binaries=target/classes
+                    """
+                }
+            }
+        }
         stage('Build Docker Image') {
             steps {
                 bat 'docker build -t %DOCKER_IMAGE% .'

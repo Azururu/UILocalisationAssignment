@@ -2,5 +2,5 @@ projectKey=UILocalisationAssignment
 serverUrl=http://localhost:9000
 serverVersion=26.3.0.120487
 dashboardUrl=http://localhost:9000/dashboard?id=UILocalisationAssignment
-ceTaskId=f96f0811-81f0-471e-8a91-f758b4301e5b
-ceTaskUrl=http://localhost:9000/api/ce/task?id=f96f0811-81f0-471e-8a91-f758b4301e5b
+ceTaskId=2f934f6e-add2-4601-a121-d5616f77f17d
+ceTaskUrl=http://localhost:9000/api/ce/task?id=2f934f6e-add2-4601-a121-d5616f77f17d
