@@ -39,7 +39,9 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    docker.build("${DOCKER_IMAGE}:${DOCKER_IMAGE_TAG}")
+                    docker.withRegistry('https://index.docker.io/v1/', DOCKERHUB_CREDENTIALS_ID) {
+                        docker.build("${DOCKER_IMAGE}:${DOCKER_IMAGE_TAG}")
+                    }
                 }
             }
         }
