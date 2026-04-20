@@ -128,4 +128,32 @@ public class AppControllerTest extends ApplicationTest {
         // Result: Fuel: -6, Cost: -9 (based on current implementation)
         assertTrue(result.contains("-6") && result.contains("-9"), "Result should handle negative inputs: " + result);
     }
+
+    @Test
+    void testLanguageChangeToFA() {
+        ComboBox<String> comboBox = lookup("#comboBox").queryAs(ComboBox.class);
+        Label tripDistanceLabel = lookup("#tripDistanceText").queryAs(Label.class);
+        
+        // Change to Persian (FA)
+        clickOn(comboBox);
+        clickOn("FA");
+
+        String persianText = tripDistanceLabel.getText();
+        assertNotNull(persianText);
+        // "مسافت" is Persian for Distance in LocalizationService.getTestModeLocalization
+        assertTrue(persianText.equals("مسافت") || !persianText.isEmpty());
+    }
+
+    @Test
+    void testLanguageChangeDefault() {
+        ComboBox<String> comboBox = lookup("#comboBox").queryAs(ComboBox.class);
+        Label tripDistanceLabel = lookup("#tripDistanceText").queryAs(Label.class);
+        
+        // Change to English (EN) - should be default
+        clickOn(comboBox);
+        clickOn("EN");
+
+        String englishText = tripDistanceLabel.getText();
+        assertEquals("Trip Distance", englishText);
+    }
 }

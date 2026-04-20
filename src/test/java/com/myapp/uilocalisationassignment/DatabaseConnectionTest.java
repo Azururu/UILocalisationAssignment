@@ -151,6 +151,17 @@ public class DatabaseConnectionTest {
     }
 
     @Test
+    @DisplayName("Should test real getConnection when TEST_MODE is false")
+    public void testRealGetConnectionBypass() {
+        AppController.TEST_MODE = false;
+        // Should attempt real connection and likely throw exception
+        assertThrows(Exception.class, () -> {
+            DatabaseConnection.getConnection();
+        });
+        AppController.TEST_MODE = true; // reset
+    }
+
+    @Test
     @DisplayName("DatabaseConnection should be a static utility class")
     public void testStaticUtilityPattern() {
         try {

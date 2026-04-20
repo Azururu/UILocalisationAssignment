@@ -145,4 +145,24 @@ public class CalculationServiceTest {
         double result = calculationService.calculateTotalCost(10, -1.5);
         assertEquals(-15.0, result, 0.001);
     }
+
+    @Test
+    @DisplayName("Should test saveCalculation logic")
+    public void testSaveCalculation() {
+        // This won't actually hit the DB because of the override in setUp
+        assertDoesNotThrow(() -> 
+            calculationService.saveCalculation(100, 6, 1.5, 6, 9, "en")
+        );
+    }
+
+    @Test
+    @DisplayName("Should test real saveCalculation with TEST_MODE=true")
+    public void testRealSaveCalculationWithTestMode() {
+        CalculationService realService = new CalculationService();
+        AppController.TEST_MODE = true;
+        // Should not throw because it should skip DB access
+        assertDoesNotThrow(() -> 
+            realService.saveCalculation(100, 6, 1.5, 6, 9, "en")
+        );
+    }
 }
