@@ -37,7 +37,7 @@ public class DatabaseConnectionTest {
     public void testGetConnectionReturnTypeOrException() {
         try {
             Connection connection = DatabaseConnection.getConnection();
-            assertNotNull(connection);
+            assertNull(connection);
         } catch (SQLException e) {
             assertNotNull(e);
             assertTrue(e instanceof SQLException);

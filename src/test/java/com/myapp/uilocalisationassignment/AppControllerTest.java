@@ -18,12 +18,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class AppControllerTest extends ApplicationTest {
 
-    private AppController controller;
-
-    @BeforeAll
-    static void setup() {
+    static {
+        // TEST_MODE must be enabled BEFORE FXML loads
         AppController.TEST_MODE = true;
     }
+
+    private AppController controller;
 
     @Override
     public void start(Stage stage) throws Exception {

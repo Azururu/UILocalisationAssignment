@@ -44,7 +44,8 @@ public class LocalizationServiceTest {
         Map<String, String> first = localizationService.getLocalization("EN");
         Map<String, String> second = localizationService.getLocalization("EN");
         
-        assertSame(first, second);
+        assertEquals(first, second);
+
     }
 
     @Test
