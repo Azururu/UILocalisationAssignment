@@ -26,12 +26,12 @@ pipeline {
             steps {
                 withSonarQubeEnv('SonarQubeServer') {
                     bat """
-                        ${tool 'SonarScanner'}\\bin\\sonar-scanner^
-                        -Dsonar.projectKey=UILocalisationAssignment^
-                        -Dsonar.sources=src^
-                        -Dsonar.projectName=UILocalisationAssignment^
-                        -Dsonar.host.url=http://localhost:9000^
-                        -Dsonar.login=${env.SONAR_TOKEN}^
+                        "${tool 'SonarScanner'}\\bin\\sonar-scanner" ^
+                        -Dsonar.projectKey=UILocalisationAssignment ^
+                        -Dsonar.sources=src ^
+                        -Dsonar.projectName=UILocalisationAssignment ^
+                        -Dsonar.host.url=http://localhost:9000 ^
+                        -Dsonar.login=${env.SONAR_TOKEN} ^
                         -Dsonar.java.binaries=target/classes
                     """
                 }
