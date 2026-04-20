@@ -20,7 +20,7 @@ services:
     depends_on:
       - db
     environment:
-      DB_URL: jdbc:mariadb://db:3306/fuel_calculator_localization
+      DB_HOST: db
       DB_USER: root
       DB_PASSWORD: kissa
     volumes:
