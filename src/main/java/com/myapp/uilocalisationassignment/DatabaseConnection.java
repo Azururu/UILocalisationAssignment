@@ -19,7 +19,7 @@ public class DatabaseConnection {
     static {
         try (InputStream input = DatabaseConnection.class.getClassLoader().getResourceAsStream("db.properties")) {
             if (input == null) {
-                throw new RuntimeException("Unable to load properties file.");
+                throw new IllegalStateException("db.properties not found on classpath");
             }
             Properties props = new Properties();
             props.load(input);
