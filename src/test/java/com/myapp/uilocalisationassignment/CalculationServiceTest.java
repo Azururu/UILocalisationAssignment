@@ -113,6 +113,36 @@ public class CalculationServiceTest {
     @Test
     @DisplayName("Should work correctly in full workflow")
     public void testFullCalculationWorkflow() {
-        double totalFuel = calculationService.calculateTotalFuel(300, 7);
+        double distance = 300;
+        double consumption = 7;
+        double price = 1.2;
+        
+        double totalFuel = calculationService.calculateTotalFuel(distance, consumption);
+        double totalCost = calculationService.calculateTotalCost(totalFuel, price);
+        
+        assertEquals(21.0, totalFuel, 0.001);
+        assertEquals(25.2, totalCost, 0.001);
+    }
+
+    @Test
+    @DisplayName("Should handle negative distance")
+    public void testCalculateTotalFuelNegativeDistance() {
+        double result = calculationService.calculateTotalFuel(-100, 6);
+        // Current implementation: (6 / 100) * -100 = -6
+        assertEquals(-6.0, result, 0.001);
+    }
+
+    @Test
+    @DisplayName("Should handle negative consumption")
+    public void testCalculateTotalFuelNegativeConsumption() {
+        double result = calculationService.calculateTotalFuel(100, -6);
+        assertEquals(-6.0, result, 0.001);
+    }
+
+    @Test
+    @DisplayName("Should handle negative price")
+    public void testCalculateTotalCostNegativePrice() {
+        double result = calculationService.calculateTotalCost(10, -1.5);
+        assertEquals(-15.0, result, 0.001);
     }
 }

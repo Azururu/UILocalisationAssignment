@@ -94,4 +94,38 @@ public class AppControllerTest extends ApplicationTest {
         // Result should not change or should handle error gracefully (handleCalculate has a catch block that prints stack trace but doesn't change resultText)
         assertEquals(previousResult, resultText.getText());
     }
+
+    @Test
+    void testEmptyInput() {
+        TextField tripDistanceInput = lookup("#tripDistanceInput").queryAs(TextField.class);
+        Button btnCalculate = lookup("#btnCalculate").queryAs(Button.class);
+        Label resultText = lookup("#resultText").queryAs(Label.class);
+
+        // Clear input (it might be pre-filled or from previous test)
+        clickOn(tripDistanceInput).doubleClickOn(tripDistanceInput).eraseText(10);
+        
+        String previousResult = resultText.getText();
+        clickOn(btnCalculate);
+
+        // Should handle NumberFormatException and keep previous result
+        assertEquals(previousResult, resultText.getText());
+    }
+
+    @Test
+    void testNegativeInput() {
+        TextField tripDistanceInput = lookup("#tripDistanceInput").queryAs(TextField.class);
+        TextField fuelConsumptionRateInput = lookup("#fuelConsumptionRateInput").queryAs(TextField.class);
+        TextField fuelCostInput = lookup("#fuelCostInput").queryAs(TextField.class);
+        Button btnCalculate = lookup("#btnCalculate").queryAs(Button.class);
+        Label resultText = lookup("#resultText").queryAs(Label.class);
+
+        clickOn(tripDistanceInput).write("-100");
+        clickOn(fuelConsumptionRateInput).write("6");
+        clickOn(fuelCostInput).write("1.5");
+        clickOn(btnCalculate);
+
+        String result = resultText.getText();
+        // Result: Fuel: -6, Cost: -9 (based on current implementation)
+        assertTrue(result.contains("-6") && result.contains("-9"), "Result should handle negative inputs: " + result);
+    }
 }

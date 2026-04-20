@@ -19,6 +19,7 @@ public class LocalizationServiceTest {
 
     @BeforeEach
     public void setUp() {
+        AppController.TEST_MODE = true;
         localizationService = new LocalizationService();
         localizationService.clearCache();
     }
@@ -149,6 +150,30 @@ public class LocalizationServiceTest {
         
         assertNotNull(uppercase);
         assertNotNull(lowercase);
+    }
+
+    @Test
+    @DisplayName("Should handle null language code")
+    public void testNullLanguageCode() {
+        assertDoesNotThrow(() -> {
+            Map<String, String> result = localizationService.getLocalization(null);
+            assertNotNull(result);
+        });
+    }
+
+    @Test
+    @DisplayName("Should handle empty language code")
+    public void testEmptyLanguageCode() {
+        Map<String, String> result = localizationService.getLocalization("");
+        assertNotNull(result);
+    }
+
+    @Test
+    @DisplayName("Should return default value for missing key")
+    public void testMissingKey() {
+        Map<String, String> result = localizationService.getLocalization("EN");
+        String value = result.get("non_existent_key");
+        assertNull(value);
     }
 }
 

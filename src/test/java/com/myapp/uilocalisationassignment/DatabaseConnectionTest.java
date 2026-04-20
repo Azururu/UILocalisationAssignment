@@ -15,6 +15,11 @@ import static org.junit.jupiter.api.Assertions.*;
 @DisplayName("DatabaseConnection Tests")
 public class DatabaseConnectionTest {
 
+    @org.junit.jupiter.api.BeforeEach
+    public void setUp() {
+        AppController.TEST_MODE = true;
+    }
+
     @Test
     @DisplayName("DatabaseConnection should be instantiable")
     public void testDatabaseConnectionInstantiation() {

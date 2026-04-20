@@ -7,6 +7,9 @@ import org.testfx.framework.junit5.ApplicationTest;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class AppGUITest extends ApplicationTest {
+    static {
+        AppController.TEST_MODE = true;
+    }
 
     private AppGUI app;
     private Stage stage;

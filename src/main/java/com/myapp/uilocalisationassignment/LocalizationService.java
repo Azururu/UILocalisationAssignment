@@ -58,6 +58,9 @@ public class LocalizationService {
 
     // 🔥 Fake translations for TEST_MODE
     private Map<String, String> getTestModeLocalization(String lang) {
+        if (lang == null) {
+            lang = "en";
+        }
         return switch (lang.toLowerCase()) {
             case "fr" -> Map.of(
                     "tripDistanceText", "Distance",
