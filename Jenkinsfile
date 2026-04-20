@@ -2,6 +2,7 @@ pipeline {
     agent any
 
     environment {
+        PATH = "C:\\Program Files\\Docker\\Docker\\resources\\bin;${env.PATH}"
         DOCKER_IMAGE = "azuruu/ui-localisation-assignment"
         DOCKERHUB_CREDENTIALS_ID = 'dockerhub-creds'
         DOCKER_IMAGE_TAG = 'latest'
